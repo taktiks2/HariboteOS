@@ -3,14 +3,12 @@
 
 		ORG		0x7c00
 
-
-
 		JMP		entry
 		DB		0x90
 		DB		"HELLOIPL"
 		DW		512
 		DB		1
-		DB		1
+		DW		1
 		DB		2
 		DW		224
 		DW		2880
@@ -25,8 +23,6 @@
 		DB		"HELLO-OS   "
 		DB		"FAT12   "
 		RESB	18
-
-
 
 entry:
 		MOV		AX,0
@@ -59,10 +55,3 @@ msg:
 		RESB	0x7dfe-$
 
 		DB		0x55, 0xaa
-
-
-
-		DB		0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-		RESB	4600
-		DB		0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-		RESB	1469432
