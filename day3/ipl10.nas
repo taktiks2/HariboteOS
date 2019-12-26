@@ -1,6 +1,8 @@
 ; haribote-ipl
 ; TAB=4
 
+CYLS	EQU		10				; Specify how far to read
+
 		ORG		0x7c00			; Where this program is loaded
 
 ; Description for standard FAT12 format floppy disk
@@ -65,10 +67,19 @@ next:
 		ADD		CL,1
 		CMP		CL,18			; Compare CL and 18
 		JBE		readloop		; If CL <= 18, jump to readloop
+		MOV		CL,1
+		ADD		DH,1
+		CMP		DH,2
+		JB		readloop		; If DH < 2, jump to readloop
+		MOV		DH,0
+		ADD		CH,1
+		CMP		CH,CYLS
+		JB		readloop		; If CH < CYLS, jump to readloop
 
-fin:
-		HLT						; Stop the CPU until something happens
-		JMP		fin				; Infinite loop
+; Execute haribote.sys
+		
+		MOV		[0x0ff0],CH		; Record how far IPL has read
+		JMP		0xc200
 
 error:
 		MOV		SI,msg
@@ -82,6 +93,10 @@ putloop:
 		MOV		BX,15			; Color code
 		INT		0x10			; Call video BIOS
 		JMP		putloop
+
+fin:
+		HLT						; Stop the CPU until something happens
+		JMP		fin				; Infinite loop
 
 msg:
 		DB		0x0a, 0x0a		; 0x0a = new line
