@@ -407,8 +407,8 @@
    407 000002FA 5F                              	POP	EDI
    408 000002FB 5D                              	POP	EBP
    409 000002FC C3                              	RET
-   410 000002FD                                 	GLOBAL	_putfont8_asc
-   411 000002FD                                 _putfont8_asc:
+   410 000002FD                                 	GLOBAL	_putfonts8_asc
+   411 000002FD                                 _putfonts8_asc:
    412 000002FD 55                              	PUSH	EBP
    413 000002FE 89 E5                           	MOV	EBP,ESP
    414 00000300 57                              	PUSH	EDI

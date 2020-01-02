@@ -6,7 +6,6 @@ DSKCAC	EQU		0x00100000		; Disk cache location
 DSKCAC0	EQU		0x00008000		; Disk cache location (real mode)
 
 ; BOOT_INFO
-
 CYLS	EQU		0x0ff0			; Set by boot sector
 LEDS	EQU		0x0ff1
 VMODE	EQU		0x0ff2			; Information about the number of colors, how many bits color?
@@ -64,7 +63,6 @@ VRAM	EQU		0x0ff8			; Start address of graphic buffer
 		OR		EAX,0x00000001	; Set bit0 to 1 (to move protect mode)
 		MOV		CR0,EAX
 		JMP		pipelineflush
-
 pipelineflush:
 		MOV		AX,1*8			; 32bit readable/writable segment
 		MOV		DS,AX
@@ -113,7 +111,6 @@ pipelineflush:
 		ADD		ESI,EBX
 		MOV		EDI,[EBX+12]	; Destination
 		CALL	memcpy
-
 skip:
 		MOV		ESP,[EBX+12]	; Stack initial value
 		JMP		DWORD 2*8:0x0000001b
@@ -135,17 +132,15 @@ memcpy:
 ; memcpy can also be written with string instructions unless you forget the address size prefix
 
 		ALIGNB	16
-
 GDT0:
 		RESB	8				; Null selector
 		DW		0xffff,0x0000,0x9200,0x00cf ; 32bit readable/writable segment 
 		DW		0xffff,0x0000,0x9a28,0x0047 ; 32bit executable segment (for bootpack)
 
 		DW		0
-
 GDTR0:
 		DW		8*3-1
 		DD		GDT0
+		
 		ALIGNB	16
-
 bootpack:

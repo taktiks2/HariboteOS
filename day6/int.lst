@@ -5,7 +5,7 @@
      5 00000000                                 [BITS 32]
      6 00000000                                 	EXTERN	_io_out8
      7 00000000                                 	EXTERN	_boxfill8
-     8 00000000                                 	EXTERN	_putfont8_asc
+     8 00000000                                 	EXTERN	_putfonts8_asc
      9 00000000                                 	EXTERN	_io_hlt
     10 00000000                                 [FILE "int.c"]
     11                                          [SECTION .text]
@@ -55,9 +55,10 @@
     55 00000094 C3                              	RET
     56                                          [SECTION .data]
     57 00000000                                 LC0:
-    58 00000000 49 4E 54 32 31 20 28 49 52 51   	DB	"INT21 (IRQ-1) : PS/2 keyboard",0x00
-       0000000A 2D 31 29 20 3A 20 50 53 2F 32 
-       00000014 20 6B 65 79 62 6F 61 72 64 00 
+    58 00000000 49 4E 54 20 32 31 20 28 49 52   	DB	"INT 21 (IRQ-1) : PS/2 keyboard",0x00
+       0000000A 51 2D 31 29 20 3A 20 50 53 2F 
+       00000014 32 20 6B 65 79 62 6F 61 72 64 
+       0000001E 00 
     59                                          [SECTION .text]
     60 00000095                                 	GLOBAL	_inthandler21
     61 00000095                                 _inthandler21:
@@ -79,16 +80,16 @@
     77 000000C3 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
     78 000000CA 50                              	PUSH	EAX
     79 000000CB FF 35 00000FF8                  	PUSH	DWORD [4088]
-    80 000000D1 E8 [00000000]                   	CALL	_putfont8_asc
+    80 000000D1 E8 [00000000]                   	CALL	_putfonts8_asc
     81 000000D6 83 C4 34                        	ADD	ESP,52
     82 000000D9                                 L3:
     83 000000D9 E8 [00000000]                   	CALL	_io_hlt
     84 000000DE EB F9                           	JMP	L3
     85                                          [SECTION .data]
-    86 0000001E                                 LC1:
-    87 0000001E 49 4E 54 32 43 20 28 49 52 51   	DB	"INT2C (IRQ-12) : PS/2 mouse",0x00
-       00000028 2D 31 32 29 20 3A 20 50 53 2F 
-       00000032 32 20 6D 6F 75 73 65 00 
+    86 0000001F                                 LC1:
+    87 0000001F 49 4E 54 20 32 43 20 28 49 52   	DB	"INT 2C (IRQ-12) : PS/2 mouse",0x00
+       00000029 51 2D 31 32 29 20 3A 20 50 53 
+       00000033 2F 32 20 6D 6F 75 73 65 00 
     88                                          [SECTION .text]
     89 000000E0                                 	GLOBAL	_inthandler2c
     90 000000E0                                 _inthandler2c:
@@ -103,14 +104,14 @@
     99 000000F7 50                              	PUSH	EAX
    100 000000F8 FF 35 00000FF8                  	PUSH	DWORD [4088]
    101 000000FE E8 [00000000]                   	CALL	_boxfill8
-   102 00000103 68 [0000001E]                   	PUSH	LC1
+   102 00000103 68 [0000001F]                   	PUSH	LC1
    103 00000108 6A 07                           	PUSH	7
    104 0000010A 6A 00                           	PUSH	0
    105 0000010C 6A 00                           	PUSH	0
    106 0000010E 0F BF 05 00000FF4               	MOVSX	EAX,WORD [4084]
    107 00000115 50                              	PUSH	EAX
    108 00000116 FF 35 00000FF8                  	PUSH	DWORD [4088]
-   109 0000011C E8 [00000000]                   	CALL	_putfont8_asc
+   109 0000011C E8 [00000000]                   	CALL	_putfonts8_asc
    110 00000121 83 C4 34                        	ADD	ESP,52
    111 00000124                                 L7:
    112 00000124 E8 [00000000]                   	CALL	_io_hlt
