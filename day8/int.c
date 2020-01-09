@@ -27,30 +27,8 @@ void init_pic(void)
 
 #define PORT_KEYDAT		0x0060
 
-struct FIFO8 keyfifo;
 
-void inthandler21(int *esp)
-// Interrupt from PS/2 keyboard
-{
-	unsigned char data;
-	io_out8(PIC0_OCW2, 0x61); // Notify PIC of IRQ-01 reception completion
-	data = io_in8(PORT_KEYDAT);
-	fifo8_put(&keyfifo, data);
-	return;
-}
 
-struct FIFO8 mousefifo;
-
-void inthandler2c(int *esp)
-// Interrupt from PS/2 mouse
-{
-	unsigned char data;
-	io_out8(PIC1_OCW2, 0x64); // Notify PIC1 of IRQ-12 reception completion
-	io_out8(PIC0_OCW2, 0x62); // Notify PIC0 of IRQ-02 reception completion
-	data = io_in8(PORT_KEYDAT);
-	fifo8_put(&mousefifo, data);
-	return;
-}
 
 void inthandler27(int *esp)
 // Measures against incomplete interrupt from PIC0
